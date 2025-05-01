@@ -1,0 +1,39 @@
+const { body } = require("express-validator");
+
+const shippingCreateValidator = [
+  body("order_id")
+    .notEmpty().withMessage("Order ID is required")
+    .isInt().withMessage("Order ID must be a number"),
+
+  body("address")
+    .notEmpty().withMessage("Address is required")
+    .isString().withMessage("Address must be a valid text"),
+
+  body("city")
+    .notEmpty().withMessage("City is required")
+    .isString().withMessage("City must be a valid string")
+    .isLength({ max: 50 }).withMessage("City must not exceed 50 characters"),
+
+  body("state")
+    .notEmpty().withMessage("State is required")
+    .isString().withMessage("State must be a valid string")
+    .isLength({ max: 50 }).withMessage("State must not exceed 50 characters"),
+
+  body("pincode")
+    .notEmpty().withMessage("Pincode is required")
+    .isString().withMessage("Pincode must be a valid string")
+    .isLength({ max: 10 }).withMessage("Pincode must not exceed 10 characters"),
+
+  body("tracking_no")
+    .optional()
+    .isString().withMessage("Tracking number must be a valid string")
+    .isLength({ max: 50 }).withMessage("Tracking number must not exceed 50 characters"),
+
+  body("estimated_delivery_date")
+    .optional()
+    .isISO8601().withMessage("Estimated delivery date must be a valid date (YYYY-MM-DD)"),
+];
+
+module.exports = {
+  shippingCreateValidator,
+};

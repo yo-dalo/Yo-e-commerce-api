@@ -1,0 +1,104 @@
+POST /api/categories
+Authorization: Bearer <token>
+{
+  "name": "Electronics",
+  "img": "https://example.com/electronics.jpg"
+}
+
+
+GET /api/categories
+
+POST /api/sub-categories
+Authorization: Bearer <JWT>
+{
+  "category_id": 1,
+  "name": "T-Shirts",
+  "slug": "t-shirts",
+  "img": "image-url"
+}
+
+GET /api/sub-categories
+
+GET /api/sub-categories/1
+
+
+PUT /api/sub-categories/1
+Authorization: Bearer <JWT>
+{
+  "category_id": 1,
+  "name": "Formal Shirts",
+  "slug": "formal-shirts",
+  "img": "new-image-url"
+}
+
+
+DELETE /api/sub-categories/1
+Authorization: Bearer <JWT>
+
+
+
+
+
+
+
+
+
+
+POST /api/sizes
+Authorization: Bearer <JWT>
+{
+  "size": "L",
+  "status": "ACTIVE"
+}
+
+
+GET /api/sizes
+GET /api/sizes/1
+
+PUT /api/sizes/1
+Authorization: Bearer <JWT>
+{
+  "size": "XL",
+  "status": "ACTIVE"
+}
+
+
+DELETE /api/sizes/1
+Authorization: Bearer <JWT>
+
+
+POST /api/colors
+Authorization: Bearer <JWT>
+{
+  "color": "Red",
+  "status": "ACTIVE"
+}
+
+GET /api/colors
+
+PUT /api/colors/1
+Authorization: Bearer <JWT>
+{
+  "color": "Blue",
+  "status": "ACTIVE"
+}
+
+
+POST /api/items
+Authorization: Bearer <JWT>
+{
+  "name": "Shirt",
+  "category_id": 1,
+  "subcategory_id": 2,
+  "status": "ACTIVE"
+}
+
+PUT /api/items/1
+Authorization: Bearer <JWT>
+{
+  "name": "New Shirt"
+}
+
+
+DELETE /api/items/1
+Authorization: Bearer <JWT>
