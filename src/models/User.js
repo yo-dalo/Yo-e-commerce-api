@@ -1,21 +1,58 @@
 const db = require('../config/db');
 
-class User {
-    // Get all users with pagination and sorting
-    static async getAll({ page = 1, limit = 10, sortBy = 'name', order = 'ASC' }) {
-        const offset = (page - 1) * limit;
-        const validSortBy = ['name', 'email', 'status', 'created_at'];
-        const validOrder = ['ASC', 'DESC'];
+class UserModel {
+  static async getAll() {
+    const [users] = await db.query('SELECT * FROM users WHERE deleted_at IS NULL');
+    return users;
+  }
 
-        if (!validSortBy.includes(sortBy)) sortBy = 'name';
-        if (!validOrder.includes(order)) order = 'ASC';
-
-        const query = `
-            SELECT u.*, r.role_name 
-            FROM users u
-            LEFT JOIN roles r ON u.role_id = r.id
-            WHERE u.deleted_at IS NULL
-            ORDER BY ${sortBy} ${order}
-            LIMIT ? OFFSET ?
-        `;
+  static async getById(id) {
+    const [rows] = await db.query('SELECT * FROM users WHERE id = ? AND deleted_at IS NULL', [id]);
+    return rows[0];
+  }
+  static async getByName(name) {
+    const [rows] = await db.query('SELECT * FROM users WHERE name = ? AND deleted_at IS NULL', [name]);
+    return rows[0];
+  }
+  static async getByPhone(phone) {
+    const [rows] = await db.query('SELECT * FROM users WHERE phone = ? AND deleted_at IS NULL', [phone]);
+    return rows[0];
+  }
+  static async getByEmail(email) {
+    const [rows] = await db.query('SELECT * FROM users WHERE email = ? AND deleted_at IS NULL', [email]);
+    return rows[0];
+  }
   
+  
+  
+  
+  
+  
+
+  static async getByIdForUpdate(id) {
+    const [rows] = await db.query('SELECT * FROM users WHERE id = ?', [id]);
+    return rows[0];
+  }
+
+  static async create(data) {
+    const { name, phone, email, password, status = 'ACTIVE' } = data;
+    await db.query(
+      `INSERT INTO users (name, phone, email, password, status) VALUES (?, ?, ?, ?, ?)`,
+      [name, phone, email, password, status]
+    );
+  }
+
+  static async update(id, data) {
+    const { name, phone, email, password, status } = data;
+    await db.query(
+      `UPDATE users SET name = ?, phone = ?, email = ?, password = ?, status = ? WHERE id = ?`,
+      [name, phone, email, password, status, id]
+    );
+  }
+
+  static async softDelete(id) {
+    await db.query('UPDATE users SET deleted_at = NOW() WHERE id = ?', [id]);
+  }
+}
+
+module.exports = UserModel;

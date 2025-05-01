@@ -1,4 +1,5 @@
 const SubCategory = require('../models/SubCategory');
+const deleteImage = require('../utils/deleteImage')
 
 const getAllSubCategories = async (query) => {
     return await SubCategory.getAll(query);
@@ -17,12 +18,37 @@ const createSubCategory = async (img,data) => {
 };
 
 const updateSubCategory = async (id,img, data) => {
-    await SubCategory.update(id,img, data);
+    //await SubCategory.update(id,img, data);
+        // img? await SubCategory.update(id, img,data): await SubCategory.updateWithoutImg(id,data);
+ if(img){
+     const dImg = await SubCategory.getImgById(id)
+     await SubCategory.update(id,img,data) 
+     if(dImg) {deleteImage(dImg)};
+   }else{
+     await SubCategory.updateWithoutImg(id,data);
+   }
 };
 
 const deleteSubCategory = async (id) => {
-    await SubCategory.delete(id);
+    
+    const dImg = await SubCategory.getImgById(id)
+                 await SubCategory.delete(id);
+                 if(dImg) {deleteImage(dImg)};
 };
+
+///////extra services
+
+const getAllSubCategoriesBygetCategoriesId = async (id,query) => {
+    return await SubCategory.getAllByCatcategoryId(id,query);
+};
+
+
+
+
+
+
+
+
 
 module.exports = {
     getAllSubCategories,
@@ -30,5 +56,11 @@ module.exports = {
     getSubCategoryByIdForUpdate,
     createSubCategory,
     updateSubCategory,
-    deleteSubCategory
+    deleteSubCategory,
+    ///////////////////
+    getAllSubCategoriesBygetCategoriesId
+    
+    
+    
+    
 };

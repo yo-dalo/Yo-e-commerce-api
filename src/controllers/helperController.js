@@ -1,5 +1,5 @@
 const { successResponse, errorResponse } = require('../utils/response');
-
+const helperService = require("../services/helperService");
 exports.statusOption = async (req, res, next) => {
     try {
       
@@ -20,5 +20,16 @@ exports.statusOption = async (req, res, next) => {
         
     } catch (error) {
         next(error);
+    }
+};
+
+
+
+exports.allCount = async (req, res) => {
+    try {
+        const count = await helperService.allCount();
+        return successResponse(res, "Cart items fetched successfully", count);
+    } catch (error) {
+        return errorResponse(res, error.message);
     }
 };

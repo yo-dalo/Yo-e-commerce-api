@@ -7,7 +7,7 @@ const successResponse = (res,message, data = {},statusCode = 200) => {
 };
 
 const errorResponse = (res, message, statusCode = 400) => {
-  ///console.log(message);
+  console.log(message);
     return res.status(statusCode).json({
         status: 'error',
         message,

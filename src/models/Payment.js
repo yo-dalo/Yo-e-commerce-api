@@ -37,6 +37,13 @@ class Payment {
         const [result] = await db.execute(query, [order_id, order_amount, order_currency, payment_status, id]);
         return result.affectedRows;
     }
+    
+    static async totel() {
+        const query = `SELECT COUNT(*) AS total_payments FROM payments;`;
+        
+        const [row]=  await db.execute(query);
+      return row;
+    }
 
     static async delete(id) {
         const query = "DELETE FROM payments WHERE id = ?";

@@ -58,6 +58,15 @@ class Color {
         await db.execute(query, [color, status, updated_by, id]);
     }
 
+static async totel() {
+        const query = `SELECT COUNT(*) AS total_colors FROM colors;`;
+        
+        const [row]=  await db.execute(query);
+      return row;
+    }
+
+
+
     // Delete color by ID
     static async delete(id) {
         const query = `DELETE FROM colors WHERE id = ?`;

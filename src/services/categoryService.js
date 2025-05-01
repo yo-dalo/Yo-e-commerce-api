@@ -1,11 +1,13 @@
 const Category = require('../models/Category');
+const deleteImage = require('../utils/deleteImage')
+const {log} = require('../utils/logger')
 
 const getAllCategories = async (query) => {
     return await Category.getAll(query);
 };
 
 const getCategoryById = async (id) => {
-    return await Category.getById(id);
+   return await Category.getById(id);
 };
 
 const getCategoryByIdForUpdate = async (id) => {
@@ -17,11 +19,27 @@ const createCategory = async (img,data) => {
 };
 
 const updateCategory = async (id,img, data) => {
-    await Category.update(id, img,data);
+    
+    //await Category.updateWithoutImg(id,data);
+   
+   if(img){
+     const dImg = await Category.getImgById(id)
+     await Category.update(id,img,data) 
+     if(dImg) {deleteImage(dImg)};
+   }else{
+     await Category.updateWithoutImg(id,data);
+   }
+
+        
+        
+
 };
 
 const deleteCategory = async (id) => {
-    await Category.delete(id);
+    const dImg = await Category.getImgById(id)
+                 await Category.delete(id);
+                 if(dImg) {deleteImage(dImg)};
+     
 };
 
 module.exports = {

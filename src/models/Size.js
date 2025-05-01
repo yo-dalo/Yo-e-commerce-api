@@ -58,6 +58,16 @@ class Size {
         await db.execute(query, [size, status, updated_by, id]);
     }
 
+static async totel() {
+        const query = `SELECT COUNT(*) AS total_sizes FROM sizes;`;
+        
+        const [row]=  await db.execute(query);
+      return row;
+    }
+
+
+
+
     // Delete size by ID
     static async delete(id) {
         const query = `DELETE FROM sizes WHERE id = ?`;

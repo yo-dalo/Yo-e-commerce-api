@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const {statusOption} = require('../controllers/helperController')
+const {statusOption,allCount} = require('../controllers/helperController')
 
 router.get("/statusOption",statusOption);
+router.get("/count",allCount);
 
 
 

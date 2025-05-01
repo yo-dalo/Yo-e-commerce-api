@@ -33,7 +33,7 @@ const getCategoryByIdForUpdate = async (req, res) => {
 const createCategory = async (req, res) => {
   console.log(req.file);
     try {
-        const id = await categoryService.createCategory(req.file.filename,req.body);
+        const id = await categoryService.createCategory(req.file?.filename,req.body);
         successResponse(res, 'Category created successfully', { id });
     } catch (err) {
         errorResponse(res, err.message);
@@ -42,7 +42,7 @@ const createCategory = async (req, res) => {
 
 const updateCategory = async (req, res) => {
     try {
-        await categoryService.updateCategory(req.params.id, req.file.filename,req.body);
+        await categoryService.updateCategory(req.params.id, req.file?.filename,req.body);
         successResponse(res, 'Category updated successfully');
     } catch (err) {
         errorResponse(res, err.message);

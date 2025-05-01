@@ -1,5 +1,6 @@
 const userService = require('../services/userService');
 const { successResponse, errorResponse } = require('../utils/response');
+const {userCookieName,isProduction} = require("../config/env");
 
 const getAllUsers = async (req, res) => {
     try {
@@ -39,6 +40,12 @@ const createUser = async (req, res) => {
     }
 };
 
+
+
+
+
+
+
 const updateUser = async (req, res) => {
     try {
         await userService.updateUser(req.params.id, req.body);
@@ -57,11 +64,44 @@ const deleteUser = async (req, res) => {
     }
 };
 
+
+
+
+
+
+
+//////frantend 
+
+
+const loginUser = async (req, res) => {
+  
+      const production = isProduction === 'true';
+         
+    try {
+         const data = await userService.login(req.body);
+         
+          res.cookie(userCookieName, data.token, {
+            path: '/',
+            httpOnly: production, // Set to true in production
+            secure: production, // Only enable secure in production
+            sameSite: production ? 'None' : 'Lax', // Adjust based on the environment
+})
+          successResponse(res, 'User created successfully', data.user );
+    } catch (err) {
+        errorResponse(res, err.message);
+    }
+};
+
+
+
 module.exports = {
     getAllUsers,
     getUserById,
     getUserByIdForUpdate,
     createUser,
     updateUser,
-    deleteUser
+    deleteUser,
+    
+    
+    loginUser
 };

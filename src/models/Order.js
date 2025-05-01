@@ -38,6 +38,17 @@ class Order {
         return result.affectedRows;
     }
 
+
+
+static async totel() {
+        const query = `SELECT COUNT(*) AS total_orders FROM orders;`;
+        
+        const [row]=  await db.execute(query);
+      return row;
+    }
+
+
+
     static async delete(id) {
         const query = "DELETE FROM orders WHERE id = ?";
         const [result] = await db.execute(query, [id]);

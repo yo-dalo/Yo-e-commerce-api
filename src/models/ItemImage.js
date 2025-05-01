@@ -8,6 +8,9 @@ class ItemImage {
         return images;
     }
 
+
+
+
     // Create new image
     static async create({ item_id,img }) {
       console.log({ item_id,img });

@@ -67,6 +67,15 @@ class Item {
         await db.execute(query, [name, description, category_id, subcategory_id, status, updated_by, id]);
     }
 
+
+static async totel() {
+        const query = `SELECT COUNT(*) AS total_items FROM items;`;
+        
+        const [row]=  await db.execute(query);
+      return row;
+    }
+
+
     // Soft delete item by ID
     static async delete(id) {
         const query = `

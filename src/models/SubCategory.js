@@ -20,7 +20,6 @@ class SubCategory {
         const [subCategories] = await db.execute(query, [limit, offset]);
         return subCategories;
     }
-
     // Get subcategory by ID
     static async getById(id) {
         const query = `
@@ -32,6 +31,20 @@ class SubCategory {
         const [rows] = await db.execute(query, [id]);
         return rows[0];
     }
+
+
+static async getImgById(id) {
+        const query = `
+            SELECT img FROM sub_categories
+            WHERE id = ?
+        `;
+        const [rows] = await db.execute(query, [id]);
+        return rows[0]?.img;
+    }
+
+
+
+
 
     // Get subcategory by ID for update
     static async getByIdForUpdate(id) {
@@ -64,12 +77,69 @@ class SubCategory {
             category_id, name, slug, img, status, updated_by, id
         ]);
     }
+    static async updateWithoutImg(id, { category_id, name, slug, status, updated_by }) {
+        const query = `
+            UPDATE sub_categories
+            SET category_id = ?, name = ?, slug = ?,  status = ?, updated_by = ?
+            WHERE id = ?
+        `;
+        await db.execute(query, [
+            category_id, name, slug,  status, updated_by, id
+        ]);
+    }
+
+
+static async totel() {
+        const query = `SELECT COUNT(*) AS total_sub_categories FROM sub_categories;`;
+        
+        const [row]=  await db.execute(query);
+      return row;
+    }
+
 
     // Delete subcategory by ID
     static async delete(id) {
         const query = `DELETE FROM sub_categories WHERE id = ?`;
         await db.execute(query, [id]);
     }
+    
+    
+    ////extra moder 
+    
+        static async getAllByCatcategoryId(id,{ page = 1,  sortBy = 'name', order = 'ASC' }) {
+      
+        const validSortBy = ['name', 'status', 'created_at'];
+        const validOrder = ['ASC', 'DESC'];
+
+        if (!validSortBy.includes(sortBy)) sortBy = 'name';
+        if (!validOrder.includes(order)) order = 'ASC';
+
+        const query = `
+            SELECT 
+            id, 
+            category_id,
+            name,
+            status
+            from 
+            sub_categories WHERE category_id =?
+            ORDER BY ${sortBy} ${order}
+        `;
+        const [subCategories] = await db.execute(query, [id]);
+        
+        return subCategories;
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
 
 module.exports = SubCategory;

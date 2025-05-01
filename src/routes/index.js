@@ -7,7 +7,7 @@ const subCategoryRoutes = require('./subCategoryRoutes');
 const sizeRoutes = require('./sizeRoutes');
 const colorRoutes = require('./colorRoutes');
 const itemRoutes = require('./itemRoutes');
-//const userRoutes = require('./userRoutes');
+const userRoutes = require('./userRoutes');
 const itemVariantRoutes = require('./itemVariantRoutes');
 const wishlistRoutes = require("./wishlistRoutes");
 //const shippingDetailsRoutes = require("./shippingDetailsRoutes.js");
@@ -19,11 +19,15 @@ const orderRoutes = require("./orderRoutes");
 const paymentRoutes = require("./paymentRoutes");
 const refundRoutes = require("./refundRoutes");
 const returnRoutes = require("./returnRoutes");
+const posterRoutes = require("./posterRoutes");
+const adminRoutes = require("./adminRoutes");
+const rolePermissionRoutes = require("./rolePermissionRoutes");
+const permissionRoutes = require("./permissionRoutes");
 
 
 const router = express.Router();
 
-//router.use('/users', userRoutes);
+router.use('/users', userRoutes);
 
 
 
@@ -44,6 +48,12 @@ router.use("/cart", cartRoutes);
 router.use("/orders", orderRoutes);
 router.use("/payments", paymentRoutes);
 router.use("/refunds", refundRoutes);
-router.use("/api/returns", returnRoutes);
+router.use("/returns", returnRoutes);
+router.use("/posters", posterRoutes);
+
+
+router.use("/admins", adminRoutes);
+router.use("/role-permissions", rolePermissionRoutes);
+router.use("/permissions", permissionRoutes);
 
 module.exports = router;

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 13, 2025 at 03:54 PM
+-- Generation Time: Apr 29, 2025 at 02:34 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 8.3.8
 
@@ -55,6 +55,17 @@ CREATE TABLE `categories` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+
+
+
+
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`id`, `name`, `slug`, `img`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(19, '_______', 'Bs f', '1745903928119.jpg', 'ACTIVE', 1, 1, '2025-04-29 03:11:18', '2025-04-29 05:18:48');
+
 -- --------------------------------------------------------
 
 --
@@ -70,6 +81,13 @@ CREATE TABLE `colors` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `colors`
+--
+
+INSERT INTO `colors` (`id`, `color`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(2, 'Fgg', 'ACTIVE', 1, NULL, '2025-04-27 15:05:10', '2025-04-27 15:05:10');
 
 -- --------------------------------------------------------
 
@@ -88,6 +106,13 @@ CREATE TABLE `coupons` (
   `status` enum('ACTIVE','EXPIRED','DISABLED') DEFAULT 'ACTIVE',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `coupons`
+--
+
+INSERT INTO `coupons` (`id`, `code`, `discount_percentage`, `max_discount_amount`, `min_order_amount`, `valid_from`, `valid_to`, `status`, `created_at`) VALUES
+(1, '2', 3.00, 4.00, 6.00, '2025-04-28 09:41:32', '0000-00-00 00:00:00', 'ACTIVE', '2025-04-28 09:41:32');
 
 -- --------------------------------------------------------
 
@@ -190,6 +215,25 @@ CREATE TABLE `payments` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `posters`
+--
+
+CREATE TABLE `posters` (
+  `id` int(11) NOT NULL,
+  `index_no` int(11) NOT NULL,
+  `img` varchar(255) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `heading` varchar(255) NOT NULL,
+  `url` varchar(255) NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `status` enum('ACTIVE','INACTIVE') DEFAULT 'ACTIVE',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `refunds`
 --
 
@@ -231,6 +275,20 @@ CREATE TABLE `roles` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `roles`
+--
+
+INSERT INTO `roles` (`id`, `role_name`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Admin', 'ACTIVE', '2025-03-14 04:10:17', '2025-04-06 14:42:58'),
+(3, 'Admin1', 'INACTIVE', '2025-03-15 12:51:07', '2025-04-06 14:43:18'),
+(7, 'client1', 'ACTIVE', '2025-03-15 12:58:46', '2025-03-15 12:58:46'),
+(12, 'client2', 'ACTIVE', '2025-03-15 15:03:34', '2025-03-15 15:03:34'),
+(14, 'client3', 'ACTIVE', '2025-03-15 15:03:50', '2025-03-15 15:03:50'),
+(16, 'client5', 'ACTIVE', '2025-03-15 15:05:56', '2025-03-15 15:05:56'),
+(30, 'Boy1', 'ACTIVE', '2025-03-16 09:48:29', '2025-03-16 10:04:29'),
+(38, 'client________', 'INACTIVE', '2025-03-18 15:36:48', '2025-03-18 15:36:48');
+
 -- --------------------------------------------------------
 
 --
@@ -265,6 +323,13 @@ CREATE TABLE `sizes` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `sizes`
+--
+
+INSERT INTO `sizes` (`id`, `size`, `status`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
+(5, 'X', 'ACTIVE', 1, NULL, '2025-04-27 15:03:18', '2025-04-27 15:03:18');
 
 -- --------------------------------------------------------
 
@@ -303,6 +368,13 @@ CREATE TABLE `users` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `phone`, `email`, `password`, `status`, `role_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'Adarsh ', '7988725813', 'Email ', '123', 'ACTIVE', 1, '2025-03-14 04:11:37', '2025-03-14 04:11:37', NULL);
 
 -- --------------------------------------------------------
 
@@ -410,6 +482,12 @@ ALTER TABLE `payments`
   ADD KEY `order_id` (`order_id`);
 
 --
+-- Indexes for table `posters`
+--
+ALTER TABLE `posters`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `refunds`
 --
 ALTER TABLE `refunds`
@@ -492,19 +570,19 @@ ALTER TABLE `cart`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `colors`
 --
 ALTER TABLE `colors`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `coupons`
 --
 ALTER TABLE `coupons`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `coupon_usage`
@@ -516,19 +594,19 @@ ALTER TABLE `coupon_usage`
 -- AUTO_INCREMENT for table `items`
 --
 ALTER TABLE `items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `item_images`
 --
 ALTER TABLE `item_images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `item_variants`
 --
 ALTER TABLE `item_variants`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -541,6 +619,12 @@ ALTER TABLE `orders`
 --
 ALTER TABLE `payments`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `posters`
+--
+ALTER TABLE `posters`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `refunds`
@@ -558,7 +642,7 @@ ALTER TABLE `returns`
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `shipping_details`
@@ -570,19 +654,19 @@ ALTER TABLE `shipping_details`
 -- AUTO_INCREMENT for table `sizes`
 --
 ALTER TABLE `sizes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `sub_categories`
 --
 ALTER TABLE `sub_categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `wishlist`

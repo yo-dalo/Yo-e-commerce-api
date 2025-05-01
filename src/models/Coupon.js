@@ -37,6 +37,14 @@ class Coupon {
         const [result] = await db.execute(query, [code, discount_percentage, max_discount_amount, min_order_amount, valid_from, valid_to, status, id]);
         return result.affectedRows;
     }
+    
+    
+    static async totel() {
+        const query = `SELECT COUNT(*) AS total_coupons FROM coupons;`;
+        
+        await db.execute(query);
+    }
+    
 
     static async delete(id) {
         const query = "DELETE FROM coupons WHERE id = ?";

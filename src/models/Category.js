@@ -1,4 +1,5 @@
 const db = require('../config/db');
+const {log} = require('../utils/logger');
 
 class Category {
     // Get all categories with pagination and sorting
@@ -29,6 +30,15 @@ class Category {
         const [rows] = await db.execute(query, [id]);
         return rows[0];
     }
+    
+    static async getImgById(id) {
+        const query = `
+            SELECT img FROM categories
+            WHERE id = ?
+        `;
+        const [rows] = await db.execute(query, [id]);
+        return rows[0]?.img;
+    }
 
     // Get category by ID for update
     static async getByIdForUpdate(id) {
@@ -52,6 +62,9 @@ class Category {
 
     // Update category by ID
     static async update(id, img,{ name, slug, status, updated_by }) {
+      log({name, slug, status, updated_by})
+      
+      
         const query = `
             UPDATE categories
             SET name = ?, slug = ?, img = ?, status = ?, updated_by = ?
@@ -61,12 +74,33 @@ class Category {
             name, slug, img, status, updated_by, id
         ]);
     }
+    static async updateWithoutImg(id,{ name, slug, status, updated_by }) {
+        const query = `
+            UPDATE categories
+            SET name = ?, slug = ?,  status = ?, updated_by = ?
+            WHERE id = ?
+        `;
+        await db.execute(query, [
+            name, slug,  status, updated_by, id
+        ]);
+    }
 
+    static async totel() {
+        const query = `SELECT COUNT(*) AS total_categories FROM categories;`;
+        
+      const [row]=  await db.execute(query);
+      return row;
+    }
     // Delete category by ID
+
     static async delete(id) {
         const query = `DELETE FROM categories WHERE id = ?`;
         await db.execute(query, [id]);
     }
+    
+    
+    
+    
 }
 
 module.exports = Category;

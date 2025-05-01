@@ -32,7 +32,7 @@ const getSubCategoryByIdForUpdate = async (req, res) => {
 
 const createSubCategory = async (req, res) => {
     try {
-        const id = await subCategoryService.createSubCategory(req.file.filename,req.body);
+        const id = await subCategoryService.createSubCategory(req.file?.filename,req.body);
         successResponse(res, 'Subcategory created successfully', { id });
     } catch (err) {
         errorResponse(res, err.message);
@@ -41,7 +41,7 @@ const createSubCategory = async (req, res) => {
 
 const updateSubCategory = async (req, res) => {
     try {
-        await subCategoryService.updateSubCategory(req.params.id,req.file.filename, req.body);
+        await subCategoryService.updateSubCategory(req.params.id,req.file?.filename, req.body);
         successResponse(res, 'Subcategory updated successfully');
     } catch (err) {
         errorResponse(res, err.message);
@@ -59,11 +59,29 @@ const deleteSubCategory = async (req, res) => {
     }
 };
 
+const getAllByCatcategoryId = async (req, res) => {
+    try {
+         const  subCategories = await subCategoryService.getAllSubCategoriesBygetCategoriesId(req.params.id,req.query);
+        successResponse(res, 'Subcategory get by category successfully',subCategories);
+    } catch (err) {
+        errorResponse(res, err.message);
+    }
+};
+
+
+
+
+
+
+
+
 module.exports = {
     getAllSubCategories,
     getSubCategoryById,
     getSubCategoryByIdForUpdate,
     createSubCategory,
     updateSubCategory,
-    deleteSubCategory
+    deleteSubCategory,
+    //////////
+    getAllByCatcategoryId
 };
