@@ -1,25 +1,51 @@
 const jwt = require('jsonwebtoken');
-const dotenv = require('dotenv');
 
-dotenv.config();
+const { userJwtSecret, adminJwtSecret,adminJwtExpiresIn,userJwtExpiresIn } = require('../config/env');
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
-const JWT_EXPIRES_IN = '7d';
 
-const generateToken = (user) => {
+
+
+
+const userGenerateToken = (user={}) => {
+  
     return jwt.sign(
-        { id: user.id, role: user.role_id },
-        JWT_SECRET,
-        { expiresIn: JWT_EXPIRES_IN }
+        { id: user?.id, name:user?.name,email:user?.email,phone:user?.phone},
+        userJwtSecret,
+        { expiresIn: userJwtExpiresIn }
     );
 };
-
-const verifyToken = (token) => {
+const useeVerifyToken = (token) => {
     try {
-        return jwt.verify(token, JWT_SECRET);
+        return jwt.verify(token, userJwtSecret);
     } catch (error) {
         return null;
     }
 };
 
-module.exports = { generateToken, verifyToken };
+
+
+const adminGenerateToken = (admin) => {
+    return jwt.sign(
+        { id: user?.id, role: user?.role_id },
+        adminJwtSecret,
+        { expiresIn: adminJwtExpiresIn }
+    );
+};
+const adminVerifyToken = (token) => {
+    try {
+        return jwt.verify(token, adminJwtSecret);
+    } catch (error) {
+        return null;
+    }
+};
+
+module.exports = { 
+  userGenerateToken, 
+useeVerifyToken,
+
+adminGenerateToken,
+adminVerifyToken,
+
+  
+  
+};

@@ -23,6 +23,7 @@ const posterRoutes = require("./posterRoutes");
 const adminRoutes = require("./adminRoutes");
 const rolePermissionRoutes = require("./rolePermissionRoutes");
 const permissionRoutes = require("./permissionRoutes");
+const userAuthRoutes = require("./userAuthRoutes");
 
 
 const router = express.Router();
@@ -55,5 +56,6 @@ router.use("/posters", posterRoutes);
 router.use("/admins", adminRoutes);
 router.use("/role-permissions", rolePermissionRoutes);
 router.use("/permissions", permissionRoutes);
+router.use("/user-auth", userAuthRoutes);
 
 module.exports = router;

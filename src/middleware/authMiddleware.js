@@ -33,7 +33,7 @@ const adminAuth = (req, res, next) => {
 
     try {
         const decoded = jwt.verify(authCookie, adminJwtSecret);
-        req.user = decoded;  // Pass the decoded token data to the next middleware
+        req.admin = decoded;  // Pass the decoded token data to the next middleware
         next();
     } catch (err) {
         if (err.name === 'TokenExpiredError') {
