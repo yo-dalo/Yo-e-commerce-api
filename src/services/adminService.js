@@ -1,8 +1,9 @@
 const Admin = require('../models/Admin');
 
 const adminService = {
-  createAdmin: async (data) => {
-    const [result] = await Admin.create(data);
+  createAdmin: async (img,data) => {
+    console.log(img);
+    const [result] = await Admin.create({...data,img:img});
     return result;
   },
 

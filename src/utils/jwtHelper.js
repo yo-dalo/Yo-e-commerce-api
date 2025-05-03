@@ -26,7 +26,7 @@ const useeVerifyToken = (token) => {
 
 const adminGenerateToken = (admin) => {
     return jwt.sign(
-        { id: user?.id, role: user?.role_id },
+        { id: admin?.id, name:admin?.name,email:admin?.email,phone:admin?.phone},
         adminJwtSecret,
         { expiresIn: adminJwtExpiresIn }
     );

@@ -3,8 +3,9 @@ const { successResponse, errorResponse } = require('../utils/response'); // Assu
 
 const adminController = {
   create: async (req, res) => {
+    
     try {
-      const admin = await adminService.createAdmin(req.body);
+      const admin = await adminService.createAdmin(req.file?.filename,req.body);
       successResponse(res, 'Admin created successfully',admin);
     } catch (error) {
       errorResponse(res, error);

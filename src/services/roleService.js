@@ -1,4 +1,6 @@
 const Role = require('../models/Role');
+const rolePermissionService = require('./rolePermissionService');
+const log = require('../utils/logger');
 
 const getAllRoles = async (query) => {
     return await Role.getAll(query);
@@ -13,7 +15,16 @@ const getRoleByIdForUpdate = async (id) => {
 };
 
 const createRole = async (data) => {
-    return await Role.create(data);
+  
+   const roleId =  await Role.create(data);
+    console.log(roleId);
+    data.permissions.map(async(element)=>{
+      
+   const rolePermission =  await rolePermissionService.create({role_id:roleId,permission_id:element,created_by:1});
+     console.log(rolePermission);
+    })
+  
+   // return roleId;
 };
 
 const updateRole = async (id, data) => {

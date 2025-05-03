@@ -31,7 +31,7 @@ const getRoleByIdForUpdate = async (req, res) => {
 };
 
 const createRole = async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
     try {
         const id = await roleService.createRole(req.body);
         successResponse(res, 'Role created successfully', { id });

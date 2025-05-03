@@ -10,7 +10,7 @@ const {userGenerateToken} = require('../utils/jwtHelper');
 
 const register = async (data) => {
     const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(data.password, salt);
+    const hashedPassword = await bcrypt.hash(String(data.password), salt);
 
     const userData = {
         ...data,
