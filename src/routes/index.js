@@ -10,6 +10,7 @@ const itemRoutes = require('./itemRoutes');
 const userRoutes = require('./userRoutes');
 const itemVariantRoutes = require('./itemVariantRoutes');
 const wishlistRoutes = require("./wishlistRoutes");
+const itemImageRoutes = require("./itemImageRoutes");
 //const shippingDetailsRoutes = require("./shippingDetailsRoutes.js");
 
 const couponRoutes = require("./couponRoutes");
@@ -42,6 +43,8 @@ router.use('/sizes', sizeRoutes);
 router.use('/colors', colorRoutes);
 router.use('/items',itemRoutes);
 router.use('/item-variants', itemVariantRoutes);
+router.use('/item-images', itemImageRoutes);
+
 router.use("/wishlist", wishlistRoutes);
 //router.use("/shipping-details", shippingDetailsRoutes);
 router.use("/coupons", couponRoutes);

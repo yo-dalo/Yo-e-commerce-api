@@ -35,7 +35,7 @@ const adminController = {
 
   update: async (req, res) => {
     try {
-      await adminService.updateAdmin(req.params.id, req.body);
+      await adminService.updateAdmin(req.params.id,req.file?.filename, req.body);
       successResponse(res,  'Admin updated successfully',null,);
     } catch (error) {
       errorResponse(res, error);

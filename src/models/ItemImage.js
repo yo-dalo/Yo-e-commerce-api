@@ -24,7 +24,13 @@ class ItemImage {
     // Delete images by item ID
     static async deleteByItemId(itemId) {
         const query = `DELETE FROM item_images WHERE item_id = ?`;
-        await db.execute(query, [itemId]);
+      const deleteImg  = await db.execute(query, [itemId]);
+      
+    }
+    static async deleteById(id) {
+        const query = `DELETE FROM item_images WHERE id = ?`;
+      await db.execute(query, [id]);
+      
     }
 }
 

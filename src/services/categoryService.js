@@ -19,20 +19,13 @@ const createCategory = async (img,data) => {
 };
 
 const updateCategory = async (id,img, data) => {
-    
-    //await Category.updateWithoutImg(id,data);
-   
-   if(img){
+       if(img){
      const dImg = await Category.getImgById(id)
      await Category.update(id,img,data) 
      if(dImg) {deleteImage(dImg)};
    }else{
      await Category.updateWithoutImg(id,data);
    }
-
-        
-        
-
 };
 
 const deleteCategory = async (id) => {

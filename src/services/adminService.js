@@ -17,8 +17,8 @@ const adminService = {
     return rows[0];
   },
 
-  updateAdmin: async (id, data) => {
-    const [result] = await Admin.update(id, data);
+  updateAdmin: async (id, img,data) => {
+    const [result] = await Admin.update(id, {...data,img});
     return result;
   },
 

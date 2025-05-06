@@ -3,23 +3,23 @@ const db = require('../config/db'); // MySQL connection instance
 const authorizePermission = (permissionName) => {
   return async (req, res, next) => {
     try {
-      const userId = req.user?.id;
+      const adminId = req.admin?.id;
 
-      if (!userId) {
-        return res.status(401).json({ message: 'Unauthorized: No user ID found' });
+      if (!adminId) {
+        return res.status(401).json({ message: 'Unauthorized: No admin ID found' });
       }
 
-      // Step 1: Get user's role_id
-      const [userResult] = await db.execute(
-        'SELECT role_id FROM users WHERE id = ?',
-        [userId]
+      // Step 1: Get admin's role_id
+      const [adminResult] = await db.execute(
+        'SELECT role_id FROM admins WHERE id = ?',
+        [adminId]
       );
 
-      if (!userResult.length) {
+      if (!adminResult.length) {
         return res.status(404).json({ message: 'User not found' });
       }
 
-      const roleId = userResult[0].role_id;
+      const roleId = adminResult[0].role_id;
 
       // Step 2: Check if role has required permission
       const [permResult] = await db.execute(
