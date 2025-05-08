@@ -1,4 +1,4 @@
-const ShippingDetails = require("../models/ShippingDetails");
+const ShippingDetails = require("../models/ShippingDetail");
 
 class ShippingDetailsService {
     static async getAll(options) {

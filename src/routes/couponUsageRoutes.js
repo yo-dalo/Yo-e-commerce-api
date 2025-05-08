@@ -9,3 +9,4 @@ router.post("/", couponUsageController.create);
 router.put("/:id", couponUsageController.update);
 router.delete("/:id", couponUsageController.delete);
 
+module.exports = router;

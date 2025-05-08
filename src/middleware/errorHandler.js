@@ -10,7 +10,7 @@ class AppError extends Error {
 
 const errorHandler = (err, req, res, next) => {
     let { statusCode, message } = err;
-
+console.log(err);
     // Default values if not provided
     statusCode = statusCode || 500;
     message = message || 'Internal Server Error';

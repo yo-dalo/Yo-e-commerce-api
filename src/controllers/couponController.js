@@ -35,7 +35,7 @@ exports.create = async (req, res) => {
         const id = await CouponService.create(req.body);
         return successResponse(res, "Coupon created successfully", { id });
     } catch (error) {
-        return errorResponse(res, error.message);
+        return errorResponse(res, error);
     }
 };
 
