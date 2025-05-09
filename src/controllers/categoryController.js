@@ -58,11 +58,32 @@ const deleteCategory = async (req, res) => {
     }
 };
 
+
+
+const getAllX = async (req, res) => {
+    try {
+        const categories = await categoryService.getAllX(req.query);
+        successResponse(res, 'Categories fetched successfully', categories);
+    } catch (err) {
+        errorResponse(res, err.message);
+    }
+};
+
+
+
+
+
+
 module.exports = {
     getAllCategories,
     getCategoryById,
     getCategoryByIdForUpdate,
     createCategory,
     updateCategory,
-    deleteCategory
+    deleteCategory,
+    
+    
+    
+    
+    getAllX,
 };

@@ -135,6 +135,30 @@ static async totel() {
     
     
     
+    //// for main website
+    
+        static async getAllX({ page = 1, limit = 10, sortBy = 'name', order = 'ASC' }) {
+        const offset = (page - 1) * limit;
+        const validSortBy = ['name', 'status', 'created_at'];
+        const validOrder = ['ASC', 'DESC'];
+
+        if (!validSortBy.includes(sortBy)) sortBy = 'name';
+        if (!validOrder.includes(order)) order = 'ASC';
+
+        const query = `
+            SELECT sc.name,sc.img, sc.id,c.name AS category_name 
+            FROM sub_categories sc
+            LEFT JOIN categories c ON sc.category_id = c.id
+            WHERE c.status = 'ACTIVE' AND sc.status = 'ACTIVE'
+            ORDER BY ${sortBy} ${order}
+            LIMIT ? OFFSET ?
+        `;
+        const [subCategories] = await db.execute(query, [limit, offset]);
+        return subCategories;
+    }
+
+    
+    
     
     
     

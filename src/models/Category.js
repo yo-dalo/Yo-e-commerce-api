@@ -101,6 +101,29 @@ class Category {
     
     
     
+    
+    
+    
+    ///// for main website 
+    
+    static async getAllX({ page = 1, limit = 10, sortBy = 'name', order = 'ASC' }) {
+        const offset = (page - 1) * limit;
+        const validSortBy = ['name', 'status', 'created_at'];
+        const validOrder = ['ASC', 'DESC'];
+
+        if (!validSortBy.includes(sortBy)) sortBy = 'name';
+        if (!validOrder.includes(order)) order = 'ASC';
+        
+        const query = `
+            SELECT c.name,c.slug,c.img
+            FROM categories AS c
+            WHERE c.status = 'ACTIVE'
+            ORDER BY ${sortBy} ${order}
+            LIMIT ? OFFSET ?
+        `;
+        const [categories] = await db.execute(query, [limit, offset]);
+        return categories;
+    }
 }
 
 module.exports = Category;

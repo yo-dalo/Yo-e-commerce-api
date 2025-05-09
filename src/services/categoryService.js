@@ -35,11 +35,37 @@ const deleteCategory = async (id) => {
      
 };
 
+
+
+
+
+
+
+
+
+///// for main website 
+
+const getAllX = async (query) => {
+    return await Category.getAllX(query);
+};
+
+
+
+
+
+
+
 module.exports = {
     getAllCategories,
     getCategoryById,
     getCategoryByIdForUpdate,
     createCategory,
     updateCategory,
-    deleteCategory
+    deleteCategory,
+    
+    
+    
+    
+    /////
+    getAllX,
 };

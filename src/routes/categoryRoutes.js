@@ -17,4 +17,16 @@ router.post('/', upload.single('img'),categoryController.createCategory);
 router.put('/:id',upload.single('img'), categoryController.updateCategory);
 router.delete('/:id', categoryController.deleteCategory);
 
+
+
+////// for main website 
+
+router.get('/dalo',categoryController.getAllCategories);
+
+
+
+
+
+
+
 module.exports = router;

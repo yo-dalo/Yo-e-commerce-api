@@ -50,6 +50,20 @@ const getAllSubCategoriesBygetCategoriesId = async (id,query) => {
 
 
 
+
+
+
+
+
+
+const getAllX = async (query) => {
+    return await SubCategory.getAllX(query);
+};
+
+
+
+
+
 module.exports = {
     getAllSubCategories,
     getSubCategoryById,
@@ -58,9 +72,11 @@ module.exports = {
     updateSubCategory,
     deleteSubCategory,
     ///////////////////
-    getAllSubCategoriesBygetCategoriesId
+    getAllSubCategoriesBygetCategoriesId,
+    
+    /////for main web site 
     
     
-    
+    getAllX,
     
 };

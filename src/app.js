@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const dotenv = require('dotenv');
 const { errorHandler } = require('./middleware/errorHandler');
 const index = require("./routes/index")
+const siteRouters = require("./routes/SiteRouters/index")
 const test = require("./Test")
 const upload =require("./middleware/multer.middleware")
 
@@ -51,6 +52,7 @@ app.use("/uploads", express.static("uploads"));
 
 // Routes
 app.use('/api',index);
+app.use('/api/site',siteRouters);
 
 
 

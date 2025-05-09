@@ -71,6 +71,15 @@ const getAllByCatcategoryId = async (req, res) => {
 
 
 
+const getAllX = async (req, res) => {
+      
+    try {
+        const subCategories = await subCategoryService.getAllX(req.query);
+        successResponse(res, 'Subcategories fetched successfully', subCategories);
+    } catch (err) {
+        errorResponse(res, err.message);
+    }
+};
 
 
 
@@ -83,5 +92,12 @@ module.exports = {
     updateSubCategory,
     deleteSubCategory,
     //////////
-    getAllByCatcategoryId
+    getAllByCatcategoryId,
+    
+    
+    
+    
+    //// for main web site 
+    getAllX,
+    
 };
