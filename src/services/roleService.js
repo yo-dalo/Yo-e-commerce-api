@@ -16,12 +16,13 @@ const getRoleByIdForUpdate = async (id) => {
 
 const createRole = async (data) => {
   
+  
    const roleId =  await Role.create(data);
-    console.log(roleId);
+    console.log(data.created_by);
     data.permissions.map(async(element)=>{
       
-   const rolePermission =  await rolePermissionService.create({role_id:roleId,permission_id:element,created_by:1});
-     console.log(rolePermission);
+   const rolePermission =  await rolePermissionService.create({role_id:roleId,permission_id:element,created_by:Number(data?.created_by)});
+    // console.log(rolePermission);
     })
   
    // return roleId;

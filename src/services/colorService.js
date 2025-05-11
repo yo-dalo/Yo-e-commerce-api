@@ -24,6 +24,15 @@ const deleteColor = async (id) => {
     return await Color.delete(id);
 };
 
+
+
+//for main site 
+
+const getByItemVariantIdX = async (id) => {
+    return await Color.getByItemVariantIdX(id);
+};
+
+
 module.exports = {
     getAllColors,
     getColorById,
@@ -31,4 +40,7 @@ module.exports = {
     createColor,
     updateColor,
     deleteColor,
+    
+    
+    getByItemVariantIdX,
 };

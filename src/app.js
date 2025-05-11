@@ -3,10 +3,19 @@ const cors = require('cors');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
 const { errorHandler } = require('./middleware/errorHandler');
+const {adminAuth} = require('./middleware/authMiddleware');
+
+
 const index = require("./routes/index")
 const siteRouters = require("./routes/SiteRouters/index")
+const adminAuthRoutes = require("./routes/adminAuthRoutes");
+const userAuthRoutes = require("./routes/userAuthRoutes");
+
+
 const test = require("./Test")
 const upload =require("./middleware/multer.middleware")
+
+
 
 const cookieParser = require('cookie-parser');
 
@@ -50,10 +59,16 @@ app.use(cookieParser());
 app.use("/uploads", express.static("uploads"));
 
 
-// Routes
-app.use('/api',index);
-app.use('/api/site',siteRouters);
 
+
+
+app.use("/api/user-auth", userAuthRoutes);
+app.use("/api/admin-auth", adminAuthRoutes);
+
+
+// Routes
+app.use('/api/site',siteRouters);
+app.use('/api',adminAuth,index);
 
 
 

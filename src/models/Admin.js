@@ -1,9 +1,9 @@
 const db = require('../config/db'); // Assuming db is exported from config/db.js
-
+  
 const Admin = {
   create: (data) => {
-    const sql = `INSERT INTO admins (name, phone, email, img, password, status, role_id) VALUES (?, ?, ?, ?, ?, ?, ?)`;
-    const params = [data.name, data.phone, data.email, data.img, data.password, data.status || 'ACTIVE', data.role_id];
+    const sql = `INSERT INTO admins (name, phone, email, img, password, status, role_id,created_by) VALUES (?, ?, ?, ?, ?, ?, ?,?)`;
+    const params = [data.name, data.phone, data.email, data.img, data.password, data.status || 'ACTIVE', data.role_id,data.created_by];
     return db.query(sql, params);
   },
 

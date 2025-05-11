@@ -72,6 +72,32 @@ static async totel() {
         const query = `DELETE FROM colors WHERE id = ?`;
         await db.execute(query, [id]);
     }
+    
+    
+    
+    //for main website
+    
+    static async getByIdX(id) {
+        const query = `SELECT color FROM colors WHERE id = ? AND status = 'ACTIVE'`;
+        const [rows] = await db.execute(query, [id]);
+        return rows[0];
+    }
+    static async getByItemVariantIdX(id) {
+        const query = `SELECT c.color FROM 
+        colors c LEFT JOIN item_variants iv ON iv.color_id = c.id
+        WHERE iv.id = ? AND c.status = 'ACTIVE'`;
+        const [rows] = await db.execute(query, [id]);
+        return rows[0];
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
 
 module.exports = Color;

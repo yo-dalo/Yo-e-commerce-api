@@ -61,7 +61,47 @@ const posterController = {
     } catch (error) {
       errorResponse(res, error);
     }
+  },
+  
+  
+  
+  
+  
+  
+  
+/////site rout 
+
+
+getAllX: async (req, res) => {
+    try {
+      const posters = await posterService.getAllX();
+      successResponse(res, 'Posters fetched successfully',posters);
+    } catch (error) {
+      errorResponse(res, error);
+    }
   }
+
+
+
+
+  
+  
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 module.exports = posterController;

@@ -53,6 +53,24 @@ const deleteItem = async (id) => {
     await ItemImage.deleteByItemId(id);
 };
 
+
+
+
+
+
+/// for main website 
+
+const getByIdX = async (id) => {
+    const item = await Item.getByIdX(id);
+
+    return item;
+};
+
+
+
+
+
+
 module.exports = {
     getAllItems,
     getItemById,
@@ -60,4 +78,11 @@ module.exports = {
     createItem,
     updateItem,
     deleteItem,
+    
+    
+    
+    
+    
+  ///  from main web site 
+    getByIdX,
 };

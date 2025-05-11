@@ -35,12 +35,12 @@ class Role {
     }
 
     // Create new role
-    static async create({ role_name, status }) {
+    static async create({ role_name, status , created_by }) {
         const query = `
-            INSERT INTO roles (role_name, status)
-            VALUES (?, ?)
+            INSERT INTO roles (role_name, status,created_by)
+            VALUES (?, ?, ?)
         `;
-        const [result] = await db.execute(query, [role_name, status]);
+        const [result] = await db.execute(query, [role_name,  status, created_by]);
         return result.insertId;
     }
 

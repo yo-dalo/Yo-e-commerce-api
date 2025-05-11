@@ -60,7 +60,9 @@ const getAllX = async (query) => {
     return await SubCategory.getAllX(query);
 };
 
-
+const getByCatX = async (id) => {
+    return await SubCategory.getByCatX(id);
+};
 
 
 
@@ -78,5 +80,5 @@ module.exports = {
     
     
     getAllX,
-    
+    getByCatX,
 };

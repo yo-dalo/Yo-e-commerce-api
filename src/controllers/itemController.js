@@ -4,17 +4,18 @@ const { successResponse, errorResponse } = require('../utils/response');
 const getAllItems = async (req, res) => {
     try {
         const items = await itemService.getAllItems(req.query);
-        successResponse(res, 'Items fetched successfully', items);
+        successResponse(res, 'Items fetched successfully _', items);
     } catch (err) {
         errorResponse(res, err.message);
     }
 };
 
 const getItemById = async (req, res) => {
+  
     try {
         const item = await itemService.getItemById(req.params.id);
         if (!item) return errorResponse(res, 'Item not found', 404);
-        successResponse(res, 'Item fetched successfully', item);
+        successResponse(res, 'Item fetched successfully for admin', item);
     } catch (err) {
         errorResponse(res, err.message);
     }
@@ -61,6 +62,25 @@ const deleteItem = async (req, res) => {
     }
 };
 
+
+//// for main web site 
+
+
+const getByIdX = async (req, res) => {
+  
+    try {
+        const item = await itemService.getByIdX(req.params.id);
+        if (!item) return errorResponse(res, 'Item not found', 404);
+        successResponse(res, 'Item fetched successfully 1', item);
+    } catch (err) {
+        errorResponse(res, err.message);
+    }
+};
+
+
+
+
+
 module.exports = {
     getAllItems,
     getItemById,
@@ -68,4 +88,8 @@ module.exports = {
     createItem,
     updateItem,
     deleteItem,
+    
+    
+    /// for main website 
+    getByIdX,
 };

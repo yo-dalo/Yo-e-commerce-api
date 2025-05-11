@@ -49,7 +49,17 @@ const Poster = {
   delete: (id) => {
     const sql = `DELETE FROM posters WHERE id = ?`;
     return db.query(sql, [id]);
+  },
+
+
+
+getAllX: () => {
+    const sql = `SELECT id, index_no, img, title, heading, url, status FROM posters WHERE status = 'ACTIVE' ORDER BY index_no ASC`;
+    return db.query(sql);
   }
 };
+
+
+
 
 module.exports = Poster;

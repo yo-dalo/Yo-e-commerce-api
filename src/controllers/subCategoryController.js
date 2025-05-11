@@ -81,6 +81,16 @@ const getAllX = async (req, res) => {
     }
 };
 
+const getByCatX = async (req, res) => {
+    try {
+        const subCategory = await subCategoryService.getByCatX(req.params.id);
+        if (!subCategory) return errorResponse(res, 'Subcategory not found', 404);
+        successResponse(res, 'Subcategory fetched successfully', subCategory);
+    } catch (err) {
+        errorResponse(res, err.message);
+    }
+};
+
 
 
 
@@ -99,5 +109,5 @@ module.exports = {
     
     //// for main web site 
     getAllX,
-    
+    getByCatX,
 };

@@ -43,7 +43,18 @@ const posterService = {
     
     //const [result] = await Poster.delete(id);
     //return result;
-  }
+  },
+  
+  /////for main site 
+  
+  getAllX: async () => {
+    const [rows] = await Poster.getAllX();
+    return rows;
+  },
+  
+  
+  
+  
 };
 
 module.exports = posterService;

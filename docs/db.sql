@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 08, 2025 at 09:05 AM
+-- Generation Time: May 09, 2025 at 10:12 AM
 -- Server version: 11.8.0-MariaDB
 -- PHP Version: 8.3.8
 
@@ -106,7 +106,8 @@ CREATE TABLE `coupons` (
   `valid_from` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `valid_to` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `status` enum('ACTIVE','EXPIRED','DISABLED') DEFAULT 'ACTIVE',
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `created_by` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
@@ -251,7 +252,8 @@ CREATE TABLE `posters` (
   `created_by` int(11) NOT NULL,
   `status` enum('ACTIVE','INACTIVE') DEFAULT 'ACTIVE',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_by` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
@@ -294,6 +296,8 @@ CREATE TABLE `roles` (
   `id` int(11) NOT NULL,
   `role_name` varchar(50) NOT NULL,
   `status` enum('ACTIVE','INACTIVE') DEFAULT 'ACTIVE',
+  `created_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
@@ -445,7 +449,8 @@ ALTER TABLE `colors`
 --
 ALTER TABLE `coupons`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `code` (`code`);
+  ADD UNIQUE KEY `code` (`code`),
+  ADD KEY `Coupons_ibfk_` (`created_by`);
 
 --
 -- Indexes for table `coupon_usage`
@@ -518,7 +523,9 @@ ALTER TABLE `permissions`
 -- Indexes for table `posters`
 --
 ALTER TABLE `posters`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `Poster_shd` (`created_by`),
+  ADD KEY `Poster_dhjd` (`updated_by`);
 
 --
 -- Indexes for table `refunds`
@@ -541,7 +548,9 @@ ALTER TABLE `returns`
 --
 ALTER TABLE `roles`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `role_name` (`role_name`);
+  ADD UNIQUE KEY `role_name` (`role_name`),
+  ADD KEY `Role_fts` (`created_by`),
+  ADD KEY `Role_dhhd` (`updated_by`);
 
 --
 -- Indexes for table `role_permissions`
@@ -761,15 +770,21 @@ ALTER TABLE `cart`
 -- Constraints for table `categories`
 --
 ALTER TABLE `categories`
-  ADD CONSTRAINT `categories_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE SET NULL,
-  ADD CONSTRAINT `categories_ibfk_2` FOREIGN KEY (`updated_by`) REFERENCES `users` (`id`) ON DELETE SET NULL;
+  ADD CONSTRAINT `categories_ibfk_3` FOREIGN KEY (`updated_by`) REFERENCES `admins` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `categories_ibfk_4` FOREIGN KEY (`created_by`) REFERENCES `admins` (`id`) ON DELETE SET NULL;
 
 --
 -- Constraints for table `colors`
 --
 ALTER TABLE `colors`
-  ADD CONSTRAINT `colors_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE SET NULL,
-  ADD CONSTRAINT `colors_ibfk_2` FOREIGN KEY (`updated_by`) REFERENCES `users` (`id`) ON DELETE SET NULL;
+  ADD CONSTRAINT `colors_ibfk_2` FOREIGN KEY (`updated_by`) REFERENCES `admins` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `colors_ibfk_3` FOREIGN KEY (`created_by`) REFERENCES `admins` (`id`);
+
+--
+-- Constraints for table `coupons`
+--
+ALTER TABLE `coupons`
+  ADD CONSTRAINT `Coupons_ibfk_` FOREIGN KEY (`created_by`) REFERENCES `admins` (`id`);
 
 --
 -- Constraints for table `coupon_usage`
@@ -785,8 +800,8 @@ ALTER TABLE `coupon_usage`
 ALTER TABLE `items`
   ADD CONSTRAINT `items_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `items_ibfk_2` FOREIGN KEY (`subcategory_id`) REFERENCES `sub_categories` (`id`) ON DELETE SET NULL,
-  ADD CONSTRAINT `items_ibfk_3` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE SET NULL,
-  ADD CONSTRAINT `items_ibfk_4` FOREIGN KEY (`updated_by`) REFERENCES `users` (`id`) ON DELETE SET NULL;
+  ADD CONSTRAINT `items_ibfk_3` FOREIGN KEY (`created_by`) REFERENCES `admins` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `items_ibfk_4` FOREIGN KEY (`updated_by`) REFERENCES `admins` (`id`) ON DELETE SET NULL;
 
 --
 -- Constraints for table `item_images`
@@ -815,6 +830,13 @@ ALTER TABLE `payments`
   ADD CONSTRAINT `payments_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE;
 
 --
+-- Constraints for table `posters`
+--
+ALTER TABLE `posters`
+  ADD CONSTRAINT `Poster_dhjd` FOREIGN KEY (`updated_by`) REFERENCES `admins` (`id`),
+  ADD CONSTRAINT `Poster_shd` FOREIGN KEY (`created_by`) REFERENCES `admins` (`id`);
+
+--
 -- Constraints for table `refunds`
 --
 ALTER TABLE `refunds`
@@ -827,6 +849,13 @@ ALTER TABLE `refunds`
 ALTER TABLE `returns`
   ADD CONSTRAINT `returns_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `returns_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `roles`
+--
+ALTER TABLE `roles`
+  ADD CONSTRAINT `Role_dhhd` FOREIGN KEY (`updated_by`) REFERENCES `admins` (`id`),
+  ADD CONSTRAINT `Role_fts` FOREIGN KEY (`created_by`) REFERENCES `admins` (`id`);
 
 --
 -- Constraints for table `role_permissions`
@@ -847,16 +876,16 @@ ALTER TABLE `shipping_details`
 -- Constraints for table `sizes`
 --
 ALTER TABLE `sizes`
-  ADD CONSTRAINT `sizes_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE SET NULL,
-  ADD CONSTRAINT `sizes_ibfk_2` FOREIGN KEY (`updated_by`) REFERENCES `users` (`id`) ON DELETE SET NULL;
+  ADD CONSTRAINT `sizes_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `admins` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `sizes_ibfk_2` FOREIGN KEY (`updated_by`) REFERENCES `admins` (`id`) ON DELETE SET NULL;
 
 --
 -- Constraints for table `sub_categories`
 --
 ALTER TABLE `sub_categories`
   ADD CONSTRAINT `sub_categories_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `sub_categories_ibfk_2` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE SET NULL,
-  ADD CONSTRAINT `sub_categories_ibfk_3` FOREIGN KEY (`updated_by`) REFERENCES `users` (`id`) ON DELETE SET NULL;
+  ADD CONSTRAINT `sub_categories_ibfk_2` FOREIGN KEY (`created_by`) REFERENCES `admins` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `sub_categories_ibfk_3` FOREIGN KEY (`updated_by`) REFERENCES `admins` (`id`) ON DELETE SET NULL;
 
 --
 -- Constraints for table `wishlist`

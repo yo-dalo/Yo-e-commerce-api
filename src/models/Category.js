@@ -115,7 +115,7 @@ class Category {
         if (!validOrder.includes(order)) order = 'ASC';
         
         const query = `
-            SELECT c.name,c.slug,c.img
+            SELECT c.name,c.slug,c.img,c.id
             FROM categories AS c
             WHERE c.status = 'ACTIVE'
             ORDER BY ${sortBy} ${order}

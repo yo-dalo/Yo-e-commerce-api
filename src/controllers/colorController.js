@@ -57,6 +57,19 @@ const deleteColor = async (req, res) => {
     }
 };
 
+/////main site rout 
+const getByItemVariantIdX = async (req, res) => {
+    try {
+        const color = await colorService.getByItemVariantIdX(req.params.id);
+        if (!color) return errorResponse(res, 'Color not found', 404);
+        successResponse(res, 'Color fetched successfully', color);
+    } catch (err) {
+        errorResponse(res, err.message);
+    }
+};
+
+
+
 module.exports = {
     getAllColors,
     getColorById,
@@ -64,4 +77,9 @@ module.exports = {
     createColor,
     updateColor,
     deleteColor,
+    
+    
+    
+    
+    getByItemVariantIdX, ///extera 
 };

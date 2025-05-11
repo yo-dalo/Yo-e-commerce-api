@@ -158,7 +158,17 @@ static async totel() {
     }
 
     
-    
+        static async getByCatX(id) {
+        const query = `
+            SELECT sc.name,sc.img, sc.id,c.name AS category_name 
+            FROM sub_categories sc
+            LEFT JOIN categories c ON sc.category_id = c.id
+            WHERE  c.status = 'ACTIVE' AND sc.status = 'ACTIVE' AND c.id = ?
+        `;
+        const [rows] = await db.execute(query, [id]);
+        return rows;
+    }
+
     
     
     

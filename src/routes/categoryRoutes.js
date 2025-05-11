@@ -19,9 +19,8 @@ router.delete('/:id', categoryController.deleteCategory);
 
 
 
-////// for main website 
 
-router.get('/dalo',categoryController.getAllCategories);
+
 
 
 

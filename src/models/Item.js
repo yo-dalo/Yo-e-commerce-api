@@ -85,6 +85,80 @@ static async totel() {
         `;
         await db.execute(query, [id]);
     }
+    
+    
+    
+    //////////// for main website modle 
+    
+    
+    // models/itemModel.js
+
+   static async getByIdX(id) {
+  const query = `
+    SELECT 
+  i.id AS item_id,
+  i.name,
+  i.description,
+  i.category_id,
+  c.name AS category_name,
+  i.subcategory_id,
+  sc.name AS subcategory_name,
+  i.status AS item_status,
+
+  iv.id AS variant_id,
+  iv.size_id,
+  GROUP_CONCAT(DISTINCT s.size) AS size_name,
+  iv.color_id,
+  GROUP_CONCAT(DISTINCT co.color) AS color_name,
+  iv.stock,
+  iv.low_stock_threshold,
+  iv.price,
+  iv.is_out_of_stock,
+  iv.status AS variant_status,
+  GROUP_CONCAT(DISTINCT ii.image_path) AS images
+
+FROM items i
+JOIN categories c ON i.category_id = c.id
+JOIN sub_categories sc ON i.subcategory_id = sc.id
+JOIN item_variants iv ON i.id = iv.item_id
+JOIN sizes s ON iv.size_id = s.id
+JOIN colors co ON iv.color_id = co.id
+LEFT JOIN item_images ii ON iv.id = ii.variant_id
+
+WHERE i.status = 'ACTIVE' AND iv.status = 'ACTIVE' AND iv.stock > 0
+
+GROUP BY i.id, iv.id
+
+    
+  `;
+
+  const [rows] = await db.execute(query, [id]);
+  return rows;
+};
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
 
 module.exports = Item;
