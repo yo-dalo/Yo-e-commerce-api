@@ -1,6 +1,4 @@
 const Admin = require('../models/Admin');
-const deleteImage = require('../utils/deleteImage')
-
 
 const adminService = {
   createAdmin: async (img,data) => {
@@ -23,7 +21,7 @@ const adminService = {
     const [result] = await Admin.update(id, {...data,img});
     return result;
   },
- 
+
   deleteAdmin: async (id) => {
     const [result] = await Admin.delete(id);
     return result;

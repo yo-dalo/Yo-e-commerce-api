@@ -7,7 +7,7 @@ const {adminAuth} = require('./middleware/authMiddleware');
 
 
 const index = require("./routes/index")
-const siteRouters = require("./routes/SiteRouters/index")
+const site = require("./site/routes/index")
 const adminAuthRoutes = require("./routes/adminAuthRoutes");
 const userAuthRoutes = require("./routes/userAuthRoutes");
 
@@ -67,7 +67,7 @@ app.use("/api/admin-auth", adminAuthRoutes);
 
 
 // Routes
-app.use('/api/site',siteRouters);
+app.use('/api/site',site);
 app.use('/api',adminAuth,index);
 
 

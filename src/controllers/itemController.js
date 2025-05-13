@@ -32,7 +32,7 @@ const getItemByIdForUpdate = async (req, res) => {
 };
 
 const createItem = async (req, res) => {
- // console.log(req.body);
+ console.log(req.body);
   
         
     try {
