@@ -17,7 +17,15 @@ const getItemById = async (id) => {
 };
 
 const getItemByIdForUpdate = async (id) => {
-    return await Item.getByIdForUpdate(id);
+   // return await Item.getByIdForUpdate(id);
+    
+    const item = await Item.getByIdForUpdate(id);
+    console.log(item);
+    if (item) {
+        item.images = await ItemImage.getByItemId(id);
+        item.itemVariantData = await ItemVariant.getAllByItemIdForUpdate(id);
+    }
+    return item;
 };
 
 const createItem = async (data, images) => {

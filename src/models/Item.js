@@ -25,6 +25,7 @@ class Item {
 
     // Get item by ID
     static async getById(id) {
+      console.log(id);
         const query = `
             SELECT i.*, c.name AS category_name, sc.name AS subcategory_name
             FROM items i
